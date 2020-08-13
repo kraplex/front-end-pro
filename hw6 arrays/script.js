@@ -7,7 +7,7 @@ function infoConsole(item) {
 }
 
 function infoAlert(item) {
-    alert(`Array's item's value: ${item}`)
+    console.log(`Array's item's value: ${item}`)
 }
 
 function forEach(ar, callback) {
@@ -17,7 +17,6 @@ function forEach(ar, callback) {
     }
 }
 forEach(myArray, infoConsole)
-myArray.forEach(infoConsole)
 
 
 //Написать собственную реализацию функции map
