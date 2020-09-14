@@ -17,6 +17,22 @@ box-sizing: border-box;
 text-align: center;
 }
 
+
+.list {
+margin: 10px;
+padding: 50px;
+}
+
+.li {
+    margin: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+}
+
+.selected {
+    color: red;
+}
+
 .blue {
     background-color: blue;
 }
