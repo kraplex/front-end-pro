@@ -13,14 +13,14 @@ if (wrapper) {
   const usersList = ["first", "second", "third"];
 
   for (let i = 0; i < usersList.length; i++) {
-    let user = createListItem({text:usersList[i]}) 
+    let user = createListItem({ text: usersList[i] })
     list.appendChild(user)
   }
 
 
   function createInput(props) {
     const input = document.createElement("input");
-    input.style.margin ="20px";
+    input.style.margin = "20px";
     const placeholder = props.placeholder || "";
     const className = props.className || ""
     input.placeholder = placeholder;
@@ -88,6 +88,7 @@ if (wrapper) {
   function createForm(addUser) {
     const welcomeText = document.createElement("span");
     welcomeText.innerText = "Enter User Name";
+    welcomeText.style.margin = "10px";
 
     const okButton = createButton({
       buttonText: "Ok",
