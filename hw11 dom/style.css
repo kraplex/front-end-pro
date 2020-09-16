@@ -4,8 +4,12 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    margin-left: 30px;
+
+
+#wrapper {
+    margin: 100px;
+    border: 1px solid grey ;
+    border-radius: 5px;
 }
 
 .buttoncreateuser {
@@ -13,6 +17,9 @@ body {
     border-radius: 3px;
 }
 
-.inputcreateuser {
-    margin: 20px
+.list {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    list-style: none;
 }
