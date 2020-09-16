@@ -10,7 +10,7 @@ if (wrapper) {
   wrapper.appendChild(list);
 
 
-  const usersList = ["first", "second", "third"];
+  const usersList = ["first", "second", "third", "Галя"];
 
   for (let i = 0; i < usersList.length; i++) {
     let user = createListItem({ text: usersList[i] })
