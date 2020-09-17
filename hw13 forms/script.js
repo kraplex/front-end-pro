@@ -1,4 +1,3 @@
-
 const logInForm = createLogInForm({
     className: "logInForm"
 });
@@ -34,17 +33,16 @@ function createLogInForm(props) {
     const className = props.className || "";
     logInForm.className = className;
 
-    const inputLogin = createInput({
+    const inputEmail = createInput({
         className: "input",
         placeholder: "E-mail",
         type: "text"
     })
 
-
     const inputPassword = createInput({
         className: "input",
         placeholder: "Password",
-        type: "password"
+        type: "text"
     })
 
     const okButton = createButton({
@@ -53,68 +51,97 @@ function createLogInForm(props) {
         className: "button"
     })
 
+    const userData = {};
+
     logInForm.addEventListener("input", () => {
 
-        const userData = {};
-        userData["e-mail"] = inputLogin.value;
+        userData["e-mail"] = inputEmail.value;
         const arrayEmail = Array.from(userData["e-mail"]);
-
 
         userData["password"] = inputPassword.value;
         const arrayPassword = Array.from(userData["password"]);
 
-        let isNumeral = arrayPassword.some((item) => {
-            if (!Number.isNaN(item)) {
-                return true
-            }
-        })
-
-        let isAt = arrayEmail.some((item) => {
+        let isAtInEmail = arrayEmail.some((item) => {
             if (item === "@")
                 return true
         })
 
-        let isPoint = arrayEmail.some((item) => {
+        let isPointInEmail = arrayEmail.some((item) => {
             if (item === ".")
                 return true
         })
 
-        if (/* isAt === true &&
-            isPoint === true &&
+        let isNumeralInPassword = arrayPassword.some((item) => {
+            if (!Number.isNaN(+item)) {
+                return true
+            }
+        })
+
+
+        //------ ХОЧУ ДОБАВИТЬ ПРОВЕРКУ НА ПУСТОЙ СИМВОЛ------
+
+        /* let noEmptyInEmail = arrayEmail.some((item) => {
+            if (item === "") { return false }
+            else return true   
+        }) */
+
+        /* let noEmptyInPassword = arrayPassword.some((item) => {
+            if (item === "") { return false }
+            else return true   
+        }) */
+
+
+        let isSymbolInPassword = arrayPassword.some((item) => {
+            if (item === "@" ||
+                item === "$" ||
+                item === "#" ||
+                item === "!" ||
+                item === "?" ||
+                item === "&") {
+                return true
+            }
+        })
+
+        if (isAtInEmail === true &&
+            isPointInEmail === true &&
+            //noEmptyInEmail === true &&
             (arrayEmail.indexOf(".") - arrayEmail.indexOf("@") > 1) === true &&
             (arrayEmail.length - arrayEmail.indexOf(".") > 1) === true &&
-            (inputLogin.value !== "" && inputPassword.value !== "") === true && */
-            (arrayPassword.length > 8) === true && isNumeral !== false) { okButton.disabled = false }
+            (inputEmail.value !== "")) {
+            inputEmail.style.outlineColor = ""
+        } else inputEmail.style.outlineColor = "red"
 
+        if (isNumeralInPassword === true &&
+            isSymbolInPassword === true &&
+            //noEmptyInPassword === true
+            (inputPassword.value !== "") &&
+            (arrayPassword.length > 7)) {
+            inputPassword.style.outlineColor = ""
+        } else inputPassword.style.outlineColor = "red"
 
-    /*    
-        userData["password"] = inputPassword.value;
- */
+        if (isAtInEmail === true &&
+            isPointInEmail === true &&
+            //noEmptyInEmail === true &&
+            (arrayEmail.indexOf(".") - arrayEmail.indexOf("@") > 1) === true &&
+            (arrayEmail.length - arrayEmail.indexOf(".") > 1) === true &&
+            (inputEmail.value !== "" && inputPassword.value !== "") === true &&
+            (arrayPassword.length > 7) === true && isNumeralInPassword !== false &&
+            //noEmptyInPassword === true
+            isSymbolInPassword === true) {
+            okButton.disabled = false;
+        } else okButton.disabled = true
+    });
 
+    okButton.addEventListener("click", () => {
+        inputEmail.value = "";
+        inputPassword.value = "";
+        okButton.disabled = true;
+        console.log(userData)
+    })
 
+    logInForm.appendChild(inputEmail);
+    logInForm.appendChild(inputPassword);
+    logInForm.appendChild(okButton);
 
-
-
-
-
-    /*  if (inputLogin.value !== "" && inputPassword.value !== "") {
-         okButton.disabled = false
-     } else okButton.disabled = true */
-});
-
-
-
-
-okButton.addEventListener("click", () => {
-    inputLogin.value = "";
-    inputPassword.value = "";
-    okButton.disabled = true;
-
-})
-
-logInForm.appendChild(inputLogin);
-logInForm.appendChild(inputPassword);
-logInForm.appendChild(okButton);
-
-return logInForm
+    return logInForm
 }
