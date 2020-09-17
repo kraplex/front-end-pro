@@ -29,7 +29,7 @@ function createButton(props) {
 }
 
 function createLogInForm(props) {
-    const logInForm = document.createElement("div");
+    const logInForm = document.createElement("form");
     const className = props.className || "";
     logInForm.className = className;
 
@@ -42,7 +42,7 @@ function createLogInForm(props) {
     const inputPassword = createInput({
         className: "input",
         placeholder: "Password",
-        type: "text"
+        type: "password"
     })
 
     const okButton = createButton({
@@ -52,84 +52,70 @@ function createLogInForm(props) {
     })
 
     const userData = {};
+    userData.email = inputEmail.value;
+    const arrayEmail = Array.from(userData.email);
+    userData.password = inputPassword.value;
+    const arrayPassword = Array.from(userData.password);
 
     logInForm.addEventListener("input", () => {
+        let emailValid = isEmailValid(arrayEmail)
+        function isEmailValid(arrayEmail) {
+            let isAtInEmail = arrayEmail.some((item) => {
+                if (item === "@")
+                    return true
+            })
 
-        userData["e-mail"] = inputEmail.value;
-        const arrayEmail = Array.from(userData["e-mail"]);
+            let isPointInEmail = arrayEmail.some((item) => {
+                if (item === ".")
+                    return true
+            })
 
-        userData["password"] = inputPassword.value;
-        const arrayPassword = Array.from(userData["password"]);
-
-        let isAtInEmail = arrayEmail.some((item) => {
-            if (item === "@")
+            if (isAtInEmail === true &&
+                isPointInEmail === true &&
+                (arrayEmail.indexOf("@") > 0) === true &&
+                (arrayEmail.indexOf(".") - arrayEmail.indexOf("@") > 1) === true &&
+                (arrayEmail.length - arrayEmail.indexOf(".") > 1) === true &&
+                (inputEmail.value !== "")) {
                 return true
-        })
+            } else return false
+        }
 
-        let isPointInEmail = arrayEmail.some((item) => {
-            if (item === ".")
+        let passwordValid = isPasswordValid(arrayPassword);
+        function isPasswordValid(arrayPassword) {
+            let isNumeralInPassword = arrayPassword.some((item) => {
+                if (!Number.isNaN(+item)) {
+                    return true
+                }
+            })
+
+            let isSymbolInPassword = arrayPassword.some((item) => {
+                if (item === "@" ||
+                    item === "$" ||
+                    item === "#" ||
+                    item === "!" ||
+                    item === "?" ||
+                    item === "&") {
+                    return true
+                }
+            })
+
+            if (isNumeralInPassword === true &&
+                isSymbolInPassword === true &&
+                (inputPassword.value !== "") &&
+                (arrayPassword.length > 7)) {
                 return true
-        })
+            } else return false
+        }
 
-        let isNumeralInPassword = arrayPassword.some((item) => {
-            if (!Number.isNaN(+item)) {
-                return true
-            }
-        })
-
-
-        //------ ХОЧУ ДОБАВИТЬ ПРОВЕРКУ НА ПУСТОЙ СИМВОЛ------
-
-        /* let noEmptyInEmail = arrayEmail.some((item) => {
-            if (item === "") { return false }
-            else return true   
-        }) */
-
-        /* let noEmptyInPassword = arrayPassword.some((item) => {
-            if (item === "") { return false }
-            else return true   
-        }) */
-
-
-        let isSymbolInPassword = arrayPassword.some((item) => {
-            if (item === "@" ||
-                item === "$" ||
-                item === "#" ||
-                item === "!" ||
-                item === "?" ||
-                item === "&") {
-                return true
-            }
-        })
-
-        if (isAtInEmail === true &&
-            isPointInEmail === true &&
-            //noEmptyInEmail === true &&
-            (arrayEmail.indexOf("@") > 0) === true &&
-            (arrayEmail.indexOf(".") - arrayEmail.indexOf("@") > 1) === true &&
-            (arrayEmail.length - arrayEmail.indexOf(".") > 1) === true &&
-            (inputEmail.value !== "")) {
+        if (emailValid === true) {
             inputEmail.style.outlineColor = ""
         } else inputEmail.style.outlineColor = "red"
 
-        if (isNumeralInPassword === true &&
-            isSymbolInPassword === true &&
-            //noEmptyInPassword === true
-            (inputPassword.value !== "") &&
-            (arrayPassword.length > 7)) {
+        if (passwordValid === true) {
             inputPassword.style.outlineColor = ""
         } else inputPassword.style.outlineColor = "red"
 
-        if (isAtInEmail === true &&
-            isPointInEmail === true &&
-            //noEmptyInEmail === true &&
-            (arrayEmail.indexOf("@") > 0) === true &&
-            (arrayEmail.indexOf(".") - arrayEmail.indexOf("@") > 1) === true &&
-            (arrayEmail.length - arrayEmail.indexOf(".") > 1) === true &&
-            (inputEmail.value !== "" && inputPassword.value !== "") === true &&
-            (arrayPassword.length > 7) === true && isNumeralInPassword !== false &&
-            //noEmptyInPassword === true
-            isSymbolInPassword === true) {
+        if (emailValid === true && passwordValid === true) {
             okButton.disabled = false;
         } else okButton.disabled = true
     });
