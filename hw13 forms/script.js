@@ -105,6 +105,7 @@ function createLogInForm(props) {
         if (isAtInEmail === true &&
             isPointInEmail === true &&
             //noEmptyInEmail === true &&
+            (arrayEmail.indexOf("@") > 0) === true &&
             (arrayEmail.indexOf(".") - arrayEmail.indexOf("@") > 1) === true &&
             (arrayEmail.length - arrayEmail.indexOf(".") > 1) === true &&
             (inputEmail.value !== "")) {
@@ -122,6 +123,7 @@ function createLogInForm(props) {
         if (isAtInEmail === true &&
             isPointInEmail === true &&
             //noEmptyInEmail === true &&
+            (arrayEmail.indexOf("@") > 0) === true &&
             (arrayEmail.indexOf(".") - arrayEmail.indexOf("@") > 1) === true &&
             (arrayEmail.length - arrayEmail.indexOf(".") > 1) === true &&
             (inputEmail.value !== "" && inputPassword.value !== "") === true &&
