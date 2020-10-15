@@ -1,4 +1,4 @@
-function makeCounter() {
+/* function makeCounter() {
     let count = 0;
 
     return function () {
@@ -11,7 +11,7 @@ let counter = makeCounter();
 console.log(counter()); // 0
 console.log(counter()); // 1
 console.log(counter()); // 2
-
+ */
 
 
 //Написать функцию, которая принимает один параметр. 
@@ -21,12 +21,12 @@ console.log(counter()); // 2
 sum(5) = 8
 sum(20) = 28 */
 
-function createCounter() {
-    let sum = 0;
-    function count(number) {
-        return sum += number
-    } return count
+function sum(n) {
+    return function(r){
+        return n + r
+    }
 }
-
-console.log(createCounter(3));
-console.log(createCounter(5));
+ 
+const t = sum(3)
+const res = t(0)
+console.log(res)
