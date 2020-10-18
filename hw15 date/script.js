@@ -9,17 +9,17 @@ wrapper.style.border = "1px solid blue";
 const select = document.createElement("select");
 const option1 = document.createElement("option");
 const option2 = document.createElement("option");
-const option3 = document.createElement("option");
+
 select.appendChild(option1);
 select.appendChild(option2);
-select.appendChild(option3);
+
 wrapper.appendChild(select);
 option1.innerText = "HH:MM:SS";
 option2.innerText = "HH:MM:SS a.m./p.m.";
-option3.innerText = "sdfsdfs";
-option1.value = "format1";
-option2.value = "format2";
-option3.value = "format3";
+
+option1.value = "one";
+option2.value = "two";
+
 
 const div = document.createElement("div");
 wrapper.appendChild(div);
@@ -61,16 +61,11 @@ function renderWatches(string) {
 
 
 
-wrapper.addEventListener("change", (event) => {
-    switch(event.target.value) {
-        case "format1":
-            console.log("format1")  
-          break;
-      
-        case "format1":  
-        console.log("format2")
-          break;
-    }
+select.addEventListener("change", (event) => {
+    if (event.target.value === "one") {
+        console.log("one")
+    } else (event.target.value === "two") 
+        console.log("two")    
 })
 
 
