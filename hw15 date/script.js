@@ -9,16 +9,27 @@ wrapper.style.border = "1px solid blue";
 const select = document.createElement("select");
 const option1 = document.createElement("option");
 const option2 = document.createElement("option");
+const option3 = document.createElement("option");
 select.appendChild(option1);
 select.appendChild(option2);
+select.appendChild(option3);
 wrapper.appendChild(select);
 option1.innerText = "HH:MM:SS";
 option2.innerText = "HH:MM:SS a.m./p.m.";
+option3.innerText = "sdfsdfs";
 option1.value = "format1";
 option2.value = "format2";
+option3.value = "format3";
 
+const div = document.createElement("div");
+wrapper.appendChild(div);
 
-setInterval(() => { renderWatches(dateFormatSimple()) }, 1000);
+renderWatches(dateFormatSimple());
+
+let intervalIds = [];
+let intervalId = setInterval(() => { renderWatches(dateFormatSimple()) }, 1000);
+intervalIds.push(intervalId);
+
 
 function dateFormatSimple() {
     const date = new Date();
@@ -34,15 +45,14 @@ function dateFormatAmPm() {
     return currentTime;
 }
 
-
-
 function renderWatches(string) {
     const arr = Array.from(string);
-    const div = document.createElement("div");
+
+    while (div.firstChild) {
+        div.removeChild(div.firstChild);
+    }
 
     for (let i = 0; i < arr.length; i++) {
-        if (div) { div.remove() }
-        wrapper.appendChild(div);
         const span = document.createElement("span");
         div.appendChild(span);
         span.innerHTML = arr[i];
@@ -50,12 +60,29 @@ function renderWatches(string) {
 }
 
 
-/* select.addEventListener("change", (event) => {
-    if (event.target.value === "format1") {
-        setInterval(renderWatches(dateFormatSimple()), 1000)
+
+wrapper.addEventListener("change", (event) => {
+    switch(event.target.value) {
+        case "format1":
+            console.log("format1")  
+          break;
+      
+        case "format1":  
+        console.log("format2")
+          break;
+    }
+})
 
 
 
-    }else (event.target.value === "format2")
-    setInterval(renderWatches(dateFormatAmPm()), 1000)
-}) */
+
+/* intervalIds.forEach(clearInterval);
+        renderWatches(dateFormatSimple());
+        let intervalId = setInterval(() => { renderWatches(dateFormatSimple()) }, 1000);
+        intervalIds.push(intervalId); */
+        
+        /* intervalIds.forEach(clearInterval);
+    renderWatches(dateFormatAmPm());
+    let intervalId = setInterval(() => { renderWatches(dateFormatAmPm()) }, 1000);
+    
+    intervalIds.push(intervalId); */
