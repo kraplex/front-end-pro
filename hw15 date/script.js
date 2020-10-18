@@ -10,6 +10,7 @@ const select = document.createElement("select");
 const option1 = document.createElement("option");
 const option2 = document.createElement("option");
 
+
 select.appendChild(option1);
 select.appendChild(option2);
 
@@ -63,21 +64,15 @@ function renderWatches(string) {
 
 select.addEventListener("change", (event) => {
     if (event.target.value === "one") {
-        console.log("one")
-    } else (event.target.value === "two") 
-        console.log("two")    
-})
-
-
-
-
-/* intervalIds.forEach(clearInterval);
+        intervalIds.forEach(clearInterval);
         renderWatches(dateFormatSimple());
         let intervalId = setInterval(() => { renderWatches(dateFormatSimple()) }, 1000);
-        intervalIds.push(intervalId); */
+        intervalIds.push(intervalId);
+        console.log("one");
         
-        /* intervalIds.forEach(clearInterval);
+    } else intervalIds.forEach(clearInterval);
     renderWatches(dateFormatAmPm());
     let intervalId = setInterval(() => { renderWatches(dateFormatAmPm()) }, 1000);
-    
-    intervalIds.push(intervalId); */
+    intervalIds.push(intervalId);
+    console.log("two");
+})
