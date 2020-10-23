@@ -25,7 +25,7 @@ class Unit {
 }
 
 const smallArmy = [
-    new Unit("general", 49, 100, 10),
+    new Unit("general", 55, 100, 10),
     new Unit("private", 50, 100, 20),
     new Unit("officer", 65, 100, 30),
     new Unit("officer", 70, 100, 40),
@@ -48,21 +48,11 @@ class Army {
     }
 
     isReadyToMove(distance) {
-        for (const unit of this.army) {
-            const isUnitReadyToMove = unit.isReadyToMove(distance);
-            if (!isUnitReadyToMove) {
-                return false;
-            }
-        } return true
+        return this.army.every((unit) => unit.isReadyToMove(distance));
     }
 
     isReadyToFight() {
-        for (const unit of this.army) {
-            const isUnitReadyToFight = unit.isReadyToFight();
-            if (!isUnitReadyToFight) {
-                return false;
-            }
-        } return true
+        return this.army.every((unit) => unit.isReadyToFight());
     }
 
     restore() {
@@ -72,17 +62,10 @@ class Army {
     }
 
     getReadyToMoveUnits(distance) {
-        const getReadyToMoveUnits = new Array;
-        for (const unit of this.army) {
-            const isReadyToMoveUnit = unit.isReadyToMove(distance)
-            if (isReadyToMoveUnit) {
-                getReadyToMoveUnits.push(unit)
-            }
-        } return getReadyToMoveUnits
+        return this.army.filter((unit) => unit.isReadyToMove(distance))
     }
 
     cloneUnit(number) {
         return this.army[number - 1].clone();
     }
-
 }
