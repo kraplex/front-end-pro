@@ -1,100 +1,61 @@
-const wrapper = document.querySelector("#wrapper");
-if (wrapper) {
+const list = document.querySelector("#list");
 
-    const input = document.createElement("input");
+if (localStorage.test && localStorage.test.length > 2) {
+    const arrayOfData = JSON.parse(localStorage.test);
 
-    const buttonAdd = document.createElement("button");
-    buttonAdd.className = "button";
-    buttonAdd.innerText = "Add";
-
-    const list = document.createElement("ul");
-
-
-    wrapper.appendChild(input);
-    wrapper.appendChild(buttonAdd);
-    wrapper.appendChild(list);
-
-
-    if (localStorage.test) {
-
-        const arrayOfData = JSON.parse(localStorage.test);
-
-        for (let i=0; i<arrayOfData.length; i++) {
-            
-            const listItem = document.createElement("li");
-            const span = document.createElement("span");
-            const buttonDelete = document.createElement("button");
-            buttonDelete.innerHTML = "delete";
-            listItem.appendChild(span);
-            listItem.appendChild(buttonDelete);
-            span.innerHTML = arrayOfData[i];
-            list.appendChild(listItem);
-            
-            buttonDelete.addEventListener("click", (e) => {
-                e.target.parentNode.remove();
-                
-                const items = document.querySelectorAll("ul li span");
-                const arr = [];
-                for (let index of items) {
-                    arr.push(index.innerHTML)
-                }
-                const json = JSON.stringify(arr);
-                localStorage.setItem("test", json)
-            });
-                
-        } 
+    for (let i = 0; i < arrayOfData.length; i++) {
+        const listItem = createListItem(arrayOfData[i]);
+        list.appendChild(listItem);
     }
-
-
-    buttonAdd.addEventListener("click", () => {
-        if (input.value) {
-            
-            const listItem = document.createElement("li");
-            const span = document.createElement("span");
-            const buttonDelete = document.createElement("button");
-            buttonDelete.innerHTML = "delete";
-            listItem.appendChild(span);
-            listItem.appendChild(buttonDelete);
-            span.innerHTML = input.value
-            list.appendChild(listItem)
-            
-            input.value = "";
-            
-            localStorage.clear();
-            const items = document.querySelectorAll("ul li span");
-            const arr = [];
-            for (let index of items) {
-                arr.push(index.innerHTML)
-            }
-            const json = JSON.stringify(arr);
-            localStorage.setItem("test", json)
-            
-            
-            buttonDelete.addEventListener("click", (e) => {
-                e.target.parentNode.remove();
-                
-                const items = document.querySelectorAll("ul li span");
-                const arr = [];
-                for (let index of items) {
-                    arr.push(index.innerHTML)
-                }
-                const json = JSON.stringify(arr);
-                localStorage.setItem("test", json)
-            });
-        }
-    })
-
-
-
-
-
-
-
+    list.style.display = "block";
 }
 
 
+const buttonAdd = document.querySelector("#buttonAdd");
+buttonAdd.addEventListener("click", () => {
+    if (input.value) {
+        const input = document.querySelector("#input");
 
+        list.style.display = "block";
 
+        const listItem = createListItem(input.value);
+        list.appendChild(listItem);
 
+        input.value = "";
+        hadlingLocalStorage();
+    }
+})
 
+function hadlingLocalStorage() {
+    localStorage.clear();
+    const items = document.querySelectorAll("#list li span");
+    const arr = [];
+    for (let index of items) {
+        arr.push(index.innerHTML)
+    }
+    const json = JSON.stringify(arr);
+    localStorage.setItem("test", json);
+}
 
+function createListItem(value) {
+    const listItem = document.createElement("li");
+
+    const span = document.createElement("span");
+    span.innerHTML = value;
+
+    const buttonDelete = document.createElement("button");
+    buttonDelete.id = "buttonDelete";
+    buttonDelete.innerText = "delete";
+    buttonDelete.addEventListener("click", (e) => {
+        e.target.parentNode.remove();
+        hadlingLocalStorage();
+        if (localStorage.test.length < 3) {
+            list.style.display = "none"
+        }
+    });
+
+    listItem.appendChild(span);
+    listItem.appendChild(buttonDelete);
+
+    return listItem
+}
