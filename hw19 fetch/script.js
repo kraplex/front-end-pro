@@ -6,7 +6,7 @@ const buttonTypes = Object.freeze({
 });
 
 const keyCodes = Object.freeze({
-   arrowLeft: "ArrowLeft",
+    arrowLeft: "ArrowLeft",
     arrowRight: "ArrowRight"
 });
 
@@ -28,36 +28,26 @@ class CharacterList {
         this.pageLabel = document.createElement("span");
     }
 
-
- 
     loadCharacters() {
         const searchParams = new URLSearchParams();
         searchParams.set("page", this.page);
 
         fetch(`${BASE_URL}?${searchParams}`)
-            .then(responce => responce.json())
-            .then((person) => {
-                //if (responce.status === 200) {
-                     this.data = {
-                        hasNextPage: person.info.next !== null,
-                        hasPrevPage: person.info.prev !== null,
-                        results: person.results
-                    };
-                    this.onDataLoad(); 
-                /* } else {
-                    console.error("Status != 200")
-                } */
+            .then(function (responce) {
+                if (responce.status === 200) {
+                    return responce.json()
+                } else console.error("status !== 200")
+            })
+            .then(persons => {
+                this.data = {
+                    hasNextPage: persons.info.next !== null,
+                    hasPrevPage: persons.info.prev !== null,
+                    results: persons.results
+                };
+                this.onDataLoad();
             })
             .catch(err => console.log(err));
-
-        
-    }
-
-
-
-
-
-
+    };
 
     onDataLoad() {
         this.list.innerHTML = "";

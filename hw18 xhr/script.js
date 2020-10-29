@@ -74,7 +74,6 @@ class CharacterList {
     }
 
     onButtonClick(event) {
-        console.log(event, this);
         switch (event.target.dataset.type) {
             case buttonTypes.next: {
                 this.page++;
