@@ -1,6 +1,6 @@
 const list = document.querySelector("#list");
 
-if (localStorage.test && localStorage.test.length > 2) {
+if (localStorage.test  && localStorage.test.length > 2 ) {
     const arrayOfData = JSON.parse(localStorage.test);
 
     for (let i = 0; i < arrayOfData.length; i++) {
