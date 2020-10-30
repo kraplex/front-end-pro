@@ -9,21 +9,22 @@ let botSadBye = false;
 
 buttonSend.addEventListener("click", () => {
     usersMessages.push(input.value);
-
-    if (botSadBye) {
+    if (input.value === "secret code") {
+        createUsersMessage();
+        setTimeout(createBotsMessage, 2000);
+    } else if (botSadBye) {
         createUsersMessage();
     } else if (usersMessages.some(item => item === "ok")) {
         createUsersMessage();
-        createBotsMessage("bye");
+        setTimeout(() => createBotsMessage("bye"), 2000);
         botSadBye = true;
     } else {
         createUsersMessage();
-        createBotsMessage();
+        setTimeout(createBotsMessage, 2000);
     }
 })
 
 function createUsersMessage() {
-    
     const p = document.createElement("p");
     p.innerText = input.value;
     p.style.marginLeft = "200px";
