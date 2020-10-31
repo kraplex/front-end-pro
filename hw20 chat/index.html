@@ -4,17 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 30px ;
+            }
+            .messagesField {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                border: 2px solid grey;
+                width: 390px;
+                height: 400px;
+                overflow-y: auto;
+                background-image: url(https://i.pinimg.com/originals/d8/a3/4b/d8a34b45cdd1cf3095d385cfb6167004.png);                
+                background-size: auto;
+                background-repeat: no-repeat;
+                border-radius: 5px;
+            }
+
+            .usersMessage {
+                border: 1px solid blue;
+                border-radius: 5px;
+                background-color: rgba(98, 240, 162, 0.5);
+                margin: 10px 10px;
+            }
+
+            .botsMessage {
+                align-self: flex-start;
+                border: 1px solid green;
+                border-radius: 5px;
+                background-color: rgba(85, 205, 241, 0.5);
+                margin: 10px 10px;
+            }
+    </style>
 </head>
 <body>
-    <div class="" id="wrapper">
-        <div id="messagesField"></div>   
+    <div class="wrapper" id="wrapper">
+        <div id="messagesField" class="messagesField"></div>   
         <div id="inputField">
             <input id="input" type="text">
-            <button id="buttonSend" type="button">Send</button>
+            <button id="buttonSend" type="button" disabled>Send</button>
         </div>
     </div>
-
-
     <script src="script.js"></script>
 </body>
 </html>

@@ -5,42 +5,64 @@ const messagesField = document.querySelector("#messagesField");
 const url = "https://jsonplaceholder.typicode.com/comments";
 
 const usersMessages = [];
+
 let botSadBye = false;
 
-buttonSend.addEventListener("click", () => {
-    usersMessages.push(input.value);
-    if (input.value === "secret code") {
-        createUsersMessage();
-        setTimeout(createBotsMessage, 2000);
-    } else if (botSadBye) {
-        createUsersMessage();
-    } else if (usersMessages.some(item => item === "ok")) {
-        createUsersMessage();
-        setTimeout(() => createBotsMessage("bye"), 2000);
-        botSadBye = true;
-    } else {
-        createUsersMessage();
-        setTimeout(createBotsMessage, 2000);
-    }
+buttonSend.addEventListener("click", createDialog);
+
+input.addEventListener('keydown', (event) => {
+    if (event.key === "Enter" && input.value !== "")
+    createDialog();
+});
+
+input.addEventListener("input", (event) => {
+    buttonSend.disabled = event.target.value === "";
 })
 
 function createUsersMessage() {
     const p = document.createElement("p");
+    p.className = "usersMessage";
     p.innerText = input.value;
-    p.style.marginLeft = "200px";
     messagesField.appendChild(p);
     input.value = "";
+    scrollingDown();
+    buttonSend.disabled = true;
 }
 
-function createBotsMessage(msg) {
-    fetch(url)
-        .then(responce => responce.json())
-        .then((data) => {
-            const randomValue = Math.ceil(Math.random() * 500);
-            const p = document.createElement("p");
-            p.innerText = msg || data[randomValue].name;
-            messagesField.appendChild(p);
-            input.value = "";
-        })
-        .catch(err => console.error(err));
+async function asyncCreateBotsMessage(msg) {
+    try {
+        let responce = await fetch(url);
+        let data = await responce.json();
+        const randomValue = getRandomInt(500);
+        const p = document.createElement("p");
+        p.className = "botsMessage";
+        p.innerText = msg || data[randomValue].name;
+        messagesField.appendChild(p);
+        scrollingDown();
+    } catch {
+        console.error("function asyncCreateBotsMessage() did not work")
+    }
+};
+
+function getRandomInt(max) {
+    return Math.ceil(Math.random() * max);
+}
+
+function scrollingDown() {
+    return messagesField.lastChild.scrollIntoView({ block: "center", behavior: "smooth" });
+}
+
+function createDialog() {
+    let randomIntMaxThree = getRandomInt(3) * 1000;
+    usersMessages.push(input.value);
+    if (botSadBye) {
+        createUsersMessage();
+    } else if (usersMessages.some(item => item === "Ой все")) {
+        createUsersMessage();
+        setTimeout(() => asyncCreateBotsMessage("bye"), randomIntMaxThree);
+        botSadBye = true;
+    } else {
+        createUsersMessage();
+        setTimeout(asyncCreateBotsMessage, randomIntMaxThree);
+    }
 }
